@@ -64,7 +64,7 @@ class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
 
         newsViewModel = (activity as NewsActivity).newsViewModel
         setUpHeadlinesRecycler()
-        newsAdapter=NewsAdapter()
+
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
@@ -81,11 +81,9 @@ class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
                         Log.d("HeadlinesFragment", "Articles size: ${newsResponse.articles.size}")
 
 
-                        newsAdapter = NewsAdapter()
+
                         newsAdapter.setData(newsResponse.articles.toList())
-                        binding.recyclerHeadlines.layoutManager= LinearLayoutManager(activity)
-                        binding.recyclerHeadlines.adapter=newsAdapter
-                       // newsAdapter.notifyDataSetChanged()
+                          // newsAdapter.notifyDataSetChanged()
                         val totalPages = newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
                         isLastPage = newsViewModel.headlinesPage == totalPages
 
@@ -121,12 +119,12 @@ class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
     var isLastPage = false
     var isScrolling = false
     private fun hideProgressBar() {
-        binding.paginationProgressBar.visibility = View.VISIBLE
+        binding.paginationProgressBar.visibility = View.GONE
         isLoading = true
     }
 
     private fun hideErrorMessage() {
-        itemHeadlinesError.visibility = View.VISIBLE
+        itemHeadlinesError.visibility = View.GONE
         isError = true
     }
 
@@ -175,9 +173,13 @@ class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
 
 
         private fun setUpHeadlinesRecycler() {
-           /* newsAdapter = NewsAdapter()
+            newsAdapter=NewsAdapter()
             binding.recyclerHeadlines.layoutManager= LinearLayoutManager(activity)
-            binding.recyclerHeadlines.adapter=newsAdapter*/
+            binding.recyclerHeadlines.adapter=newsAdapter
+
+            /* newsAdapter = NewsAdapter()
+             binding.recyclerHeadlines.layoutManager= LinearLayoutManager(activity)
+             binding.recyclerHeadlines.adapter=newsAdapter*/
            /* binding.recyclerHeadlines.apply {
                 adapter = newsAdapter
                 layoutManager = LinearLayoutManager(activity)

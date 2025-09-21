@@ -1,5 +1,6 @@
 package com.example.newsapp.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,8 +59,12 @@ class NewsAdapter() : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         articleDescription = holder.itemView.findViewById(R.id.articleDescription)
         articleDateTime = holder.itemView.findViewById(R.id.articleDateTime)
 
+
         holder.itemView.apply{
-            Glide.with(this).load(article.urlToImage).into(articleImage)
+            article.urlToImage.let{
+                Glide.with(this).load(article.urlToImage).into(articleImage)
+
+            }
             articleSource.text = article.source?.name
             articleTitle.text = article.title
             articleDescription.text = article.description
@@ -67,6 +72,7 @@ class NewsAdapter() : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
             setOnClickListener{
                 onItemClickListener?. let {
+                    Log.d("HeadlinesFragment", "Article clicked: ${article.toString()}")
                     it(article)
                 }
             }
